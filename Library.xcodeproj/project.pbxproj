@@ -59,7 +59,6 @@
 			children = (
 				FE83FA63262B0CC5001C31B7 /* Extensions */,
 				FE83FA65262B0D07001C31B7 /* Models */,
-				FE83FA75262B46CF001C31B7 /* Utils */,
 				FE83FA78262B5A59001C31B7 /* Modules */,
 			);
 			path = Sources;
@@ -113,13 +112,6 @@
 				FE83FA59262AF8CC001C31B7 /* ShelfSection.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		FE83FA75262B46CF001C31B7 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Utils;
 			sourceTree = "<group>";
 		};
 		FE83FA78262B5A59001C31B7 /* Modules */ = {
