@@ -10,7 +10,7 @@
 		FE83FA46262AEF9E001C31B7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE83FA45262AEF9E001C31B7 /* main.swift */; };
 		FE83FA4F262AEFD9001C31B7 /* Kanna in Frameworks */ = {isa = PBXBuildFile; productRef = FE83FA4E262AEFD9001C31B7 /* Kanna */; };
 		FE83FA53262AF33A001C31B7 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = FE83FA52262AF33A001C31B7 /* ArgumentParser */; };
-		FE83FA56262AF7FA001C31B7 /* LibraryBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE83FA55262AF7FA001C31B7 /* LibraryBuilder.swift */; };
+		FE83FA56262AF7FA001C31B7 /* Scrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE83FA55262AF7FA001C31B7 /* Scrapper.swift */; };
 		FE83FA5A262AF8CC001C31B7 /* ShelfSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE83FA59262AF8CC001C31B7 /* ShelfSection.swift */; };
 		FE83FA61262B0CBD001C31B7 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE83FA60262B0CBD001C31B7 /* String.swift */; };
 		FE83FA69262B2319001C31B7 /* HTMLGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE83FA68262B2319001C31B7 /* HTMLGenerator.swift */; };
@@ -33,7 +33,7 @@
 /* Begin PBXFileReference section */
 		FE83FA42262AEF9E001C31B7 /* Library */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Library; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE83FA45262AEF9E001C31B7 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		FE83FA55262AF7FA001C31B7 /* LibraryBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryBuilder.swift; sourceTree = "<group>"; };
+		FE83FA55262AF7FA001C31B7 /* Scrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scrapper.swift; sourceTree = "<group>"; };
 		FE83FA59262AF8CC001C31B7 /* ShelfSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShelfSection.swift; sourceTree = "<group>"; };
 		FE83FA60262B0CBD001C31B7 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		FE83FA68262B2319001C31B7 /* HTMLGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLGenerator.swift; sourceTree = "<group>"; };
@@ -119,7 +119,7 @@
 			children = (
 				FE391574262B5AB300788B43 /* HTMLGenerator */,
 				FE83FA71262B46C1001C31B7 /* FileHandler.swift */,
-				FE83FA55262AF7FA001C31B7 /* LibraryBuilder.swift */,
+				FE83FA55262AF7FA001C31B7 /* Scrapper.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -193,7 +193,7 @@
 				FE83FA46262AEF9E001C31B7 /* main.swift in Sources */,
 				FE83FA72262B46C1001C31B7 /* FileHandler.swift in Sources */,
 				FE83FA61262B0CBD001C31B7 /* String.swift in Sources */,
-				FE83FA56262AF7FA001C31B7 /* LibraryBuilder.swift in Sources */,
+				FE83FA56262AF7FA001C31B7 /* Scrapper.swift in Sources */,
 				FE83FA69262B2319001C31B7 /* HTMLGenerator.swift in Sources */,
 				FE83FA6E262B24FD001C31B7 /* Constants.swift in Sources */,
 			);

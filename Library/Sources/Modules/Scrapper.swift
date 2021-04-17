@@ -6,22 +6,9 @@
 //
 
 import Kanna
-import CryptoKit
 import Foundation
 
-struct LibraryError: LocalizedError {
-  private let description: String
-  
-  init(_ description: String) {
-    self.description = description
-  }
-  
-  var errorDescription: String? {
-    return self.description
-  }
-}
-
-class LibraryBuilder {
+class Scrapper {
   
   private let fileHandler: FileHandler
   
@@ -29,7 +16,7 @@ class LibraryBuilder {
     self.fileHandler = fileHandler
   }
   
-  func build() throws {
+  func scrap() throws {
     var sections = try self.fileHandler.getSections()
     
     for sectionIndex in 0..<sections.count {
@@ -51,7 +38,7 @@ class LibraryBuilder {
   
 }
 
-private extension LibraryBuilder {
+private extension Scrapper {
   
   func scrapBookDetails(using urlString: String) -> Book? {
     guard let url = URL(string: urlString),
