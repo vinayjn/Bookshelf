@@ -1,0 +1,52 @@
+## Build generated
+build/
+DerivedData
+/.bundle/
+/vendor/
+
+## Breakpoints
+**.xcworkspace/xcshareddata/xcdebugger/*.xcbkptlist
+
+## Various settings
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+
+## Other
+*.xccheckout
+*.moved-aside
+*.xcuserstate
+*.xcscmblueprint
+culprits.txt
+
+## Obj-C/Swift specific
+*.hmap
+*.ipa
+
+## CocoaPods
+Pods/
+
+## Fastlane
+light_screenshots/
+dark_screenshots/
+full_screenshots/
+screenshots/
+screenshots_uirc/
+fastlane/report.xml
+fastlane/Appfile
+fastlane/.env.default
+fastlane/test_output
+fastlane/release_status
+*.ipa
+*.app.dSYM.zip
+
+## AppCode
+.idea/
+
+.DS_Store
