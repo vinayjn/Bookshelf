@@ -20,7 +20,7 @@ struct FileError: LocalizedError {
 }
 
 private enum FileConstants {
-  static let IMAGES_FOLDER = "image/bookshelf/"
+  static let IMAGES_FOLDER = "images/bookshelf/"
 }
 
 class FileHandler {
@@ -66,6 +66,20 @@ class FileHandler {
       contents: data, attributes: nil)
     return FileConstants.IMAGES_FOLDER.appending(imageNameHash)
   }
+  
+  func save(html: String, output: String) throws {
+    let data = html.data(using: .utf8)
+    let mdPath = URL(fileURLWithPath: output)
+    
+    if !fileExists(path: output) {
+      FileManager.default.createFile(
+        atPath: output,
+        contents: data, attributes: nil)
+    } else {
+      try data?.write(to: mdPath, options: [])
+    }
+  }
+  
 }
 
 private extension FileHandler {
