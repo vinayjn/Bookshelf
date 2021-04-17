@@ -28,3 +28,5 @@ struct LibraryParser: ParsableCommand {
     print("Finished")
   }
 }
+
+LibraryParser.main()
