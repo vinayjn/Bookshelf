@@ -17,17 +17,22 @@ public enum Constants {
   tags: bookshelf
   ---
 
+
+  I pick up a lot of books and only get through a few.
+
+  Mentioned below are some books that continued grabbing my attention from start to finish.
+
   <div class="bookshelf">%@</div>
   """
   
   static let SECTION = """
-  <div class="section">%@</div>
+  <div class="section"><h3>%@</h3>%@</div>
   """
   
   static let BOOK = """
   <div class="book">
     <div class="book-detail-row">
-      <img class="book-cover" src="{{ site.baseurl }}/images/bookshelf/0af706f9c7d2d3e6e058db608c6eaa4b.jpg">
+      <img class="book-cover" src="{{ site.baseurl }}/%@">
       <div class="book-text-col">
         <span class="book-title"> %@</span>
         <span class="book-authors"> %@</span>
