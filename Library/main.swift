@@ -8,19 +8,23 @@
 import ArgumentParser
 
 struct LibraryParser: ParsableCommand {
-    @Argument(help: "The books json file path")
-    var inputJSON: String
-
-    mutating func run() throws {
-      
-      let fileHandler = try FileHandler(path: inputJSON)
-      let builder = LibraryBuilder(fileHandler)
-      try builder.build()
-      
-//      let generator = HTMLGenerator(path: inputJSON)
-//      generator.generate()
-      
-    }
+  @Argument(help: "The books json file path")
+  var input: String
+  
+  @Argument(help: "The output md file in which HTML will be written")
+  var output: String
+  
+  mutating func run() throws {
+    
+    let fileHandler = try FileHandler(path: input)
+    let scrapper = Scrapper(fileHandler)
+    try scrapper.scrap()
+    
+    let sections = try fileHandler.getSections()
+    let html = HTMLGenerator.generate(sections: sections)
+    
+    try fileHandler.save(html: html, output: output)
+    
+    print("Finished")
+  }
 }
-
-LibraryParser.main(["/Users/vinayjain/personal/web/lc/swift.json"])
