@@ -4,6 +4,12 @@
 
 A command-line tool that generates the bookshelf page on my website [https://vinayjain.me/bookshelf](https://vinayjain.me/bookshelf). 
 
+|                                                              |
+| :----------------------------------------------------------: |
+| <img src="extras/preview.jpg" alt="preview" style="zoom:50%;" /> |
+
+
+
 ### Installation
 
 ```bash
