@@ -23,7 +23,9 @@ class Scrapper {
       var books = sections[sectionIndex].books
       
       for bookIndex in 0..<books.count {
-        if books[bookIndex].title == nil || books[bookIndex].imageURL == nil {
+        if books[bookIndex].title == nil ||
+            books[bookIndex].imageURL == nil ||
+            books[bookIndex].authors == nil {
           if let book = self.scrapBookDetails(using: books[bookIndex].goodreadsURL) {
             books[bookIndex] = book
           }
@@ -54,7 +56,8 @@ private extension Scrapper {
     return Book(
       goodreadsURL: urlString,
       title: title,
-      imageURL: self.fileHandler.saveImage(data: imageData, book: title))
+      imageURL: self.fileHandler.saveImage(data: imageData, book: title),
+      authors: self.getAuthors(from: html))
   }
   
   func getTitleText(from html: HTMLDocument) -> String? {
@@ -66,6 +69,20 @@ private extension Scrapper {
     let src = coverImage?["src"]
     
     return src?.trimmingCharacters(in: .whitespacesAndNewlines)
+  }
+  
+  func getAuthors(from html: HTMLDocument) -> [String] {
+    var authors = [String]()
+    let authorsNode = html.at_xpath("//*[@id=\"bookAuthors\"]/span[2]")
+    
+    var count = 1
+    while let span = authorsNode?.at_xpath("//*[@class=\"authorName__container\"][\(count)]"),
+          let authorName = span.at_xpath("//*[@class=\"authorName\"]")?.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
+      authors.append(authorName)
+      count += 1
+    }
+        
+    return authors
   }
   
 }

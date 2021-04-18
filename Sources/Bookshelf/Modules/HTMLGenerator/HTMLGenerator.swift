@@ -18,7 +18,8 @@ class HTMLGenerator {
         
         guard let bookInfo = book.title?.split(separator: ":").compactMap({ String($0) }),
               let cover = book.imageURL,
-              let title = bookInfo.first
+              let title = bookInfo.first,
+              let authors = book.authors?.joined(separator: ", ")
         else {
           continue
         }
@@ -26,7 +27,7 @@ class HTMLGenerator {
         let subtitle = bookInfo.dropFirst().joined()
         
         books.append(
-          String(format: Constants.BOOK, cover, book.goodreadsURL, title, subtitle))
+          String(format: Constants.BOOK, cover, book.goodreadsURL, title, subtitle, authors))
       }
       
       sectionStrings.append(
