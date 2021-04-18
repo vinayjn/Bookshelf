@@ -7,7 +7,7 @@
 
 import ArgumentParser
 
-struct LibraryParser: ParsableCommand {
+struct Bookshelf: ParsableCommand {
   @Argument(help: "The books json file path")
   var input: String
   
@@ -29,4 +29,4 @@ struct LibraryParser: ParsableCommand {
   }
 }
 
-LibraryParser.main()
+Bookshelf.main()
