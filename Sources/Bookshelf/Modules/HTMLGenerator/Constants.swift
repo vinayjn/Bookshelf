@@ -26,7 +26,12 @@ public enum Constants {
   """
   
   static let SECTION = """
-  <div class="section"><h3>%@</h3>%@</div>
+  <div class="section">
+    <h3>%@</h3>
+    <div class="books">
+      %@
+    </div>
+  </div>
   """
   
   static let BOOK = """
@@ -34,7 +39,14 @@ public enum Constants {
     <div class="book-detail-row">
       <img class="book-cover" src="{{ site.baseurl }}/%@">
       <div class="book-text-col">
-        <span class="book-title"> %@</span>
+          <a href="%@">
+            <span class="book-title">
+              %@
+            </span>
+            <span class="book-subtitle">
+              %@
+            </span>
+          </a>
         <span class="book-authors"> %@</span>
       </div>
     </div>
