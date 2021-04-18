@@ -72,7 +72,7 @@ These properties are then written back to the original input `JSON` to avoid scr
 ```json
 [
   {
-  	"header" : "Currently Reading",
+    "header" : "Currently Reading",
     "books" : [
       {
         "title" : "Keep Going: 10 Ways to Stay Creative in Good Times and Bad",
@@ -93,7 +93,7 @@ These properties are then written back to the original input `JSON` to avoid scr
     ]
   },
   {
-  	"header" : "Read",
+    "header" : "Read",
     "books" : [
       {
         "title" : "Steve Jobs",
