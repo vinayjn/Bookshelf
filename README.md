@@ -90,6 +90,7 @@ These properties are then written back to the original input `JSON` to avoid scr
           "Donald A. Norman"
         ]
       }
+    ]
   },
   {
   	"header" : "Read",
