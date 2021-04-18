@@ -50,3 +50,4 @@ fastlane/release_status
 .idea/
 
 .DS_Store
+.build
