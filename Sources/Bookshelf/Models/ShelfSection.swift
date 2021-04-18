@@ -11,6 +11,7 @@ struct Book: Codable {
   let goodreadsURL: String
   var title: String?
   var imageURL: String?
+  var authors: [String]?
 }
 
 struct ShelfSection: Codable {
