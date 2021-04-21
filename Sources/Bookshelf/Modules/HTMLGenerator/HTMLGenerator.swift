@@ -9,8 +9,19 @@ import Foundation
 
 class HTMLGenerator {
   
-  class func generate(sections: [ShelfSection]) -> String {
+  private let fileHandler: FileHandler
+  
+  init(fileHandler: FileHandler) {
+    self.fileHandler = fileHandler
+  }
+  
+  func generate(sections: [ShelfSection]) throws -> String {
     var sectionStrings = [String]()
+    
+    let pageTemplate = try self.fileHandler.getPageTemplate()
+    let sectionTemplate = try self.fileHandler.getSectionTemplate()
+    let bookTemplate = try self.fileHandler.getBookTemplate()
+              
     for section in sections {
       var books = [String]()
       
@@ -26,15 +37,23 @@ class HTMLGenerator {
         
         let subtitle = bookInfo.dropFirst().joined()
         
-        books.append(
-          String(format: Constants.BOOK, cover, book.goodreadsURL, title, subtitle, authors))
+        let bookString = bookTemplate
+          .replacingOccurrences(of: "{{cover}}", with: cover)
+          .replacingOccurrences(of: "{{goodreadsURL}}", with: book.goodreadsURL)
+          .replacingOccurrences(of: "{{title}}", with: title)
+          .replacingOccurrences(of: "{{subtitle}}", with: subtitle)
+          .replacingOccurrences(of: "{{authors}}", with: authors)
+        
+        books.append(bookString)          
       }
       
       sectionStrings.append(
-        String(format: Constants.SECTION, section.header, books.joined(separator: "\n")))
+        sectionTemplate
+          .replacingOccurrences(of: "{{header}}", with: section.header)
+          .replacingOccurrences(of: "{{books}}", with: books.joined(separator: "\n")))
     }
     
-    return String(format: Constants.BASE, sectionStrings.joined(separator: "\n"))
+    return pageTemplate.replacingOccurrences(of: "{{content}}", with: sectionStrings.joined(separator: "\n"))
   }
   
 }
