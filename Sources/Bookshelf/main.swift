@@ -8,24 +8,20 @@
 import ArgumentParser
 
 struct Bookshelf: ParsableCommand {
-  @Argument(help: "The books json file path")
-  var input: String
   
-  @Argument(help: "The output md file in which HTML will be written")
-  var output: String
+  @Argument(help: "Path to the config file containing template details etc")
+  var configPath: String
   
   mutating func run() throws {
+    let fileHandler = try FileHandler(configPath)
     
-    let fileHandler = try FileHandler(path: input)
     let scrapper = Scrapper(fileHandler)
     try scrapper.scrap()
-    
+
     let sections = try fileHandler.getSections()
-    let html = HTMLGenerator.generate(sections: sections)
-    
-    try fileHandler.save(html: html, output: output)
-    
-    print("Finished")
+    let html = try HTMLGenerator(fileHandler: fileHandler).generate(sections: sections)
+
+    try fileHandler.save(html: html)
   }
 }
 

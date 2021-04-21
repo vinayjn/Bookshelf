@@ -19,31 +19,23 @@ struct FileError: LocalizedError {
   }
 }
 
-private enum FileConstants {
-  static let IMAGES_FOLDER = "images/bookshelf/"
-}
-
 class FileHandler {
+      
+  private var pathConfig: PathConfig
   
-  private let jsonPath: URL
-  private let baseURL: URL
-  private let imageDirectory: URL
-  
-  init(path: String) throws {
-    self.jsonPath = URL(fileURLWithPath: path)
-    
-    self.baseURL = self.jsonPath.deletingLastPathComponent()
-    self.imageDirectory = self.baseURL.appendingPathComponent(FileConstants.IMAGES_FOLDER)
-    
-    if !self.fileExists(path: path) {
-      throw FileError("Provided JSON doesn't exists")
+  init(_ configPath: String) throws {
+    let pathUrl = URL(fileURLWithPath: configPath)
+    guard let data = try? Data(contentsOf: pathUrl),
+          let pathConfig = try? JSONDecoder().decode(PathConfig.self, from: data) else {
+      throw FileError("Cannot parse PathConfig with the given file")
     }
     
+    self.pathConfig = pathConfig
     try self.createImagesDirectoryIfNeeded()
   }
   
   func getSections() throws -> [ShelfSection] {
-    let data = try Data(contentsOf: self.jsonPath)    
+    let data = try Data(contentsOf: self.pathConfig.booksJSON)
     let sections = try JSONDecoder().decode([ShelfSection].self, from: data)
     
     return sections
@@ -54,30 +46,45 @@ class FileHandler {
     encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
     let encodedData = try encoder.encode(sections)
     
-    try encodedData.write(to: self.jsonPath, options: [])
+    try encodedData.write(to: self.pathConfig.booksJSON, options: [])
   }
   
   func saveImage(data: Data, book title: String) -> String {
     let imageNameHash = title.MD5() + ".jpg"
     
-    let path = self.imageDirectory.appendingPathComponent(imageNameHash).path
+    let path = self.pathConfig.images.appendingPathComponent(imageNameHash).path
     FileManager.default.createFile(
       atPath: path,
       contents: data, attributes: nil)
-    return FileConstants.IMAGES_FOLDER.appending(imageNameHash)
+    return self.pathConfig.relativeImagePath.appending(imageNameHash)
   }
   
-  func save(html: String, output: String) throws {
+  func save(html: String) throws {
     let data = html.data(using: .utf8)
-    let mdPath = URL(fileURLWithPath: output)
     
-    if !fileExists(path: output) {
-      FileManager.default.createFile(
-        atPath: output,
-        contents: data, attributes: nil)
+    if !fileExists(path: self.pathConfig.bookshelf.path) {
+      print(FileManager.default.createFile(
+              atPath: self.pathConfig.bookshelf.path,
+        contents: data, attributes: nil))
     } else {
-      try data?.write(to: mdPath, options: [])
+      try data?.write(to: self.pathConfig.bookshelf, options: [])
     }
+  }
+  
+}
+
+extension FileHandler {
+  
+  func getPageTemplate() throws -> String {
+    return try String(contentsOf: self.pathConfig.template.page, encoding: .utf8)
+  }
+  
+  func getSectionTemplate() throws -> String {
+    return try String(contentsOf: self.pathConfig.template.section, encoding: .utf8)
+  }
+  
+  func getBookTemplate() throws -> String {
+    return try String(contentsOf: self.pathConfig.template.book, encoding: .utf8)
   }
   
 }
@@ -96,7 +103,7 @@ private extension FileHandler {
   
   func createImagesDirectoryIfNeeded() throws {
     try FileManager.default.createDirectory(
-      at: self.imageDirectory,
+      at: self.pathConfig.images,
       withIntermediateDirectories: true,
       attributes: nil)
   }
