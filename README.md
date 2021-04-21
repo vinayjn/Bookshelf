@@ -21,12 +21,13 @@ bookshelf books.json bookshelf.md
 ```
 
 
-
 ### Dependencies
 
 - [Kanna](https://github.com/tid-kijyun/Kanna.git) for scrapping websites.
 
 - [Argument Parser](https://github.com/apple/swift-argument-parser) for the basic command line interface.
+
+- [Swift Crypto](https://github.com/apple/swift-crypto) for hashing image ids in Linux platform. This is an overkill for a simple usecase, but its fine.
 
 
 
@@ -121,7 +122,6 @@ These properties are then written back to the original input `JSON` to avoid scr
   }
 ]
 ```
-
 
 
 ### Todo

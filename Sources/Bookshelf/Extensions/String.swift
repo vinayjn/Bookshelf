@@ -5,8 +5,8 @@
 //  Created by Vinay Jain on 17/04/21.
 //
 
-import CryptoKit
 import Foundation
+import Crypto
 
 extension String {
   
