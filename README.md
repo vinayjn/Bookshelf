@@ -122,12 +122,3 @@ These properties are then written back to the original input `JSON` to avoid scr
   }
 ]
 ```
-
-
-### Todo
-
-Right now most of the configuration of the scrapper is hardcoded as per my usecase. The following needs to be done to get more flexibility 
-
-- [ ] Provide a config file to read `HTML` template
-- [ ] Provide images directory path as a parameter
-
