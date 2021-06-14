@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ShelfSection: Codable {
-  public let header: String
-  public var books: [Book]
+struct ShelfSection: Codable {
+  let header: String
+  var books: [Book]
 }

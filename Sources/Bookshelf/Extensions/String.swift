@@ -1,6 +1,6 @@
 //
 //  String.swift
-//  Library
+//  Bookshelf
 //
 //  Created by Vinay Jain on 17/04/21.
 //
@@ -8,7 +8,7 @@
 import Foundation
 import Crypto
 
-public extension String {
+extension String {
   
   /// - Returns: an MD5 secure hash representation for the string
   func MD5() -> String {

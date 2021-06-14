@@ -10,11 +10,11 @@ import Foundation
 public struct FileError: LocalizedError {
   private let description: String
   
-  public init(_ description: String) {
+  init(_ description: String) {
     self.description = description
   }
   
-  public var errorDescription: String? {
+  var errorDescription: String? {
     return self.description
   }
 }
@@ -34,14 +34,14 @@ public class FileHandler {
     try self.createImagesDirectoryIfNeeded()
   }
   
-  public func getSections() throws -> [ShelfSection] {
+  func getSections() throws -> [ShelfSection] {
     let data = try Data(contentsOf: self.pathConfig.booksJSON)
     let sections = try JSONDecoder().decode([ShelfSection].self, from: data)
     
     return sections
   }
   
-  public func write(sections: [ShelfSection]) throws {
+  func write(sections: [ShelfSection]) throws {
     let encoder = JSONEncoder()
     encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
     let encodedData = try encoder.encode(sections)
@@ -49,7 +49,7 @@ public class FileHandler {
     try encodedData.write(to: self.pathConfig.booksJSON, options: [])
   }
   
-  public func saveImage(data: Data, book title: String) -> String {
+  func saveImage(data: Data, book title: String) -> String {
     let imageNameHash = title.MD5() + ".jpg"
     
     let path = self.pathConfig.images.appendingPathComponent(imageNameHash).path
@@ -75,15 +75,15 @@ public class FileHandler {
 
 extension FileHandler {
   
-  public func getPageTemplate() throws -> String {
+  func getPageTemplate() throws -> String {
     return try String(contentsOf: self.pathConfig.template.page, encoding: .utf8)
   }
   
-  public func getSectionTemplate() throws -> String {
+  func getSectionTemplate() throws -> String {
     return try String(contentsOf: self.pathConfig.template.section, encoding: .utf8)
   }
   
-  public func getBookTemplate() throws -> String {
+  func getBookTemplate() throws -> String {
     return try String(contentsOf: self.pathConfig.template.book, encoding: .utf8)
   }
   
