@@ -7,18 +7,18 @@
 
 import Foundation
 
-struct Template: Decodable {
-  let page: URL
-  let section: URL
-  let book: URL
+public struct Template: Decodable {
+  public let page: URL
+  public let section: URL
+  public let book: URL
   
-  enum CodingKeys: String, CodingKey {
+  public enum CodingKeys: String, CodingKey {
     case page
     case section
     case book
   }
   
-  init(from decoder: Decoder) throws {
+  public init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
 
     self.page = URL(fileURLWithPath: try container.decode(String.self, forKey: CodingKeys.page))
@@ -28,14 +28,14 @@ struct Template: Decodable {
   
 }
 
-struct PathConfig: Decodable {
-  let booksJSON: URL
-  let bookshelf: URL
-  let images: URL
-  let relativeImagePath: String
-  let template: Template
+public struct PathConfig: Decodable {
+  public let booksJSON: URL
+  public let bookshelf: URL
+  public let images: URL
+  public let relativeImagePath: String
+  public let template: Template
    
-  enum CodingKeys: String, CodingKey {
+  public enum CodingKeys: String, CodingKey {
     case booksJSON = "book"
     case bookshelf
     case images
@@ -43,7 +43,7 @@ struct PathConfig: Decodable {
     case template
   }
   
-  init(from decoder: Decoder) throws {
+  public init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
         
     self.booksJSON = URL(fileURLWithPath: try container.decode(String.self, forKey: CodingKeys.booksJSON))

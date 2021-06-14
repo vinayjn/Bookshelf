@@ -7,12 +7,9 @@
 
 import Foundation
 
-
-/// Book
-/// Represents a Book
-struct Book: Codable {
-  let goodreadsURL: String
-  var title: String?
-  var imageURL: String?
-  var authors: [String]?
+public struct Book: Codable {
+  public let goodreadsURL: String
+  public var title: String?
+  public var imageURL: String?
+  public var authors: [String]?
 }

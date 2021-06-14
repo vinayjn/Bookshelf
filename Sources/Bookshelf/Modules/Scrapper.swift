@@ -8,15 +8,15 @@
 import Kanna
 import Foundation
 
-class Scrapper {
+public class Scrapper {
   
   private let fileHandler: FileHandler
   
-  init(_ fileHandler: FileHandler) {
+  public init(_ fileHandler: FileHandler) {
     self.fileHandler = fileHandler
   }
   
-  func scrap() throws {
+  public func scrap() throws {
     var sections = try self.fileHandler.getSections()
     
     for sectionIndex in 0..<sections.count {

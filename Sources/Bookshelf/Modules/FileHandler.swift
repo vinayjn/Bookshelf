@@ -7,23 +7,23 @@
 
 import Foundation
 
-struct FileError: LocalizedError {
+public struct FileError: LocalizedError {
   private let description: String
   
-  init(_ description: String) {
+  public init(_ description: String) {
     self.description = description
   }
   
-  var errorDescription: String? {
+  public var errorDescription: String? {
     return self.description
   }
 }
 
-class FileHandler {
+public class FileHandler {
       
   private var pathConfig: PathConfig
   
-  init(_ configPath: String) throws {
+  public init(_ configPath: String) throws {
     let pathUrl = URL(fileURLWithPath: configPath)
     guard let data = try? Data(contentsOf: pathUrl),
           let pathConfig = try? JSONDecoder().decode(PathConfig.self, from: data) else {
@@ -34,14 +34,14 @@ class FileHandler {
     try self.createImagesDirectoryIfNeeded()
   }
   
-  func getSections() throws -> [ShelfSection] {
+  public func getSections() throws -> [ShelfSection] {
     let data = try Data(contentsOf: self.pathConfig.booksJSON)
     let sections = try JSONDecoder().decode([ShelfSection].self, from: data)
     
     return sections
   }
   
-  func write(sections: [ShelfSection]) throws {
+  public func write(sections: [ShelfSection]) throws {
     let encoder = JSONEncoder()
     encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
     let encodedData = try encoder.encode(sections)
@@ -49,7 +49,7 @@ class FileHandler {
     try encodedData.write(to: self.pathConfig.booksJSON, options: [])
   }
   
-  func saveImage(data: Data, book title: String) -> String {
+  public func saveImage(data: Data, book title: String) -> String {
     let imageNameHash = title.MD5() + ".jpg"
     
     let path = self.pathConfig.images.appendingPathComponent(imageNameHash).path
@@ -59,7 +59,7 @@ class FileHandler {
     return self.pathConfig.relativeImagePath.appending(imageNameHash)
   }
   
-  func save(html: String) throws {
+  public func save(html: String) throws {
     let data = html.data(using: .utf8)
     
     if !fileExists(path: self.pathConfig.bookshelf.path) {
@@ -75,15 +75,15 @@ class FileHandler {
 
 extension FileHandler {
   
-  func getPageTemplate() throws -> String {
+  public func getPageTemplate() throws -> String {
     return try String(contentsOf: self.pathConfig.template.page, encoding: .utf8)
   }
   
-  func getSectionTemplate() throws -> String {
+  public func getSectionTemplate() throws -> String {
     return try String(contentsOf: self.pathConfig.template.section, encoding: .utf8)
   }
   
-  func getBookTemplate() throws -> String {
+  public func getBookTemplate() throws -> String {
     return try String(contentsOf: self.pathConfig.template.book, encoding: .utf8)
   }
   

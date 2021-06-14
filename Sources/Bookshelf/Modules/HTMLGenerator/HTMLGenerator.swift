@@ -7,15 +7,15 @@
 
 import Foundation
 
-class HTMLGenerator {
+public class HTMLGenerator {
   
   private let fileHandler: FileHandler
   
-  init(fileHandler: FileHandler) {
+  public init(fileHandler: FileHandler) {
     self.fileHandler = fileHandler
   }
   
-  func generate(sections: [ShelfSection]) throws -> String {
+  public func generate(sections: [ShelfSection]) throws -> String {
     var sectionStrings = [String]()
     
     let pageTemplate = try self.fileHandler.getPageTemplate()

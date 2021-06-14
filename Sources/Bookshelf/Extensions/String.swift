@@ -8,7 +8,7 @@
 import Foundation
 import Crypto
 
-extension String {
+public extension String {
   
   /// - Returns: an MD5 secure hash representation for the string
   func MD5() -> String {
