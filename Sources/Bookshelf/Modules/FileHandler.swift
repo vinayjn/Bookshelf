@@ -50,7 +50,7 @@ public class FileHandler {
   }
   
   func saveImage(data: Data, book title: String) -> String {
-    let imageNameHash = title.MD5() + ".jpg"
+    let imageNameHash = UUID().uuidString + ".jpg"
     
     let path = self.pathConfig.images.appendingPathComponent(imageNameHash).path
     FileManager.default.createFile(
