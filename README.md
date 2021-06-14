@@ -12,23 +12,15 @@ A command-line tool that generates the bookshelf page on my website [https://vin
 
 ### Installation
 
-```bash
-git clone https://github.com/vinayjn/Bookshelf.git
-cd Bookshelf 
-make install
+Add this package as a dependency in your project.
 
-bookshelf books.json bookshelf.md 
 ```
-
+https://github.com/vinayjn/Bookshelf.git
+```
 
 ### Dependencies
 
 - [Kanna](https://github.com/tid-kijyun/Kanna.git) for scrapping websites.
-
-- [Argument Parser](https://github.com/apple/swift-argument-parser) for the basic command line interface.
-
-- [Swift Crypto](https://github.com/apple/swift-crypto) for hashing image ids in Linux platform. This is an overkill for a simple usecase, but its fine.
-
 
 
 ### How does it work?
@@ -65,7 +57,6 @@ Bookshelf is simply a web scrapper, it fetches basic information of books from G
   ```
 
 - Path to an output file where the final `HTML` of the bookshelf will be written.
-
 
 
 Each of these URLs represent a book and because the scrapper works by traversing the `HTML` document, it is necessary to provide the correct URLs else the data for the book won't be added. In the existing  implementation, the scrapper looks for the following information:
