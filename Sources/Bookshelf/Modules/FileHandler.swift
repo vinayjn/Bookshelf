@@ -10,11 +10,11 @@ import Foundation
 public struct FileError: LocalizedError {
   private let description: String
   
-  init(_ description: String) {
+  public init(_ description: String) {
     self.description = description
   }
   
-  var errorDescription: String? {
+  public var errorDescription: String? {
     return self.description
   }
 }
@@ -34,7 +34,7 @@ public class FileHandler {
     try self.createImagesDirectoryIfNeeded()
   }
   
-  func getSections() throws -> [ShelfSection] {
+  public func getSections() throws -> [ShelfSection] {
     let data = try Data(contentsOf: self.pathConfig.booksJSON)
     let sections = try JSONDecoder().decode([ShelfSection].self, from: data)
     

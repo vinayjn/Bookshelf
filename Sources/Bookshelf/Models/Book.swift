@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Book: Codable {
+public struct Book: Codable {
   public let goodreadsURL: String
   public var title: String?
   public var imageURL: String?
