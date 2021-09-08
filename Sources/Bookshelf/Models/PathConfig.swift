@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Template: Decodable {
+struct TemplatePath: Decodable {
   let page: URL
   let section: URL
   let book: URL
@@ -33,7 +33,7 @@ struct PathConfig: Decodable {
   let bookshelf: URL
   let images: URL
   let relativeImagePath: String
-  let template: Template
+  let template: TemplatePath
    
   enum CodingKeys: String, CodingKey {
     case booksJSON = "book"
@@ -49,7 +49,7 @@ struct PathConfig: Decodable {
     self.booksJSON = URL(fileURLWithPath: try container.decode(String.self, forKey: CodingKeys.booksJSON))
     self.bookshelf = URL(fileURLWithPath: try container.decode(String.self, forKey: CodingKeys.bookshelf))
     self.images = URL(fileURLWithPath: try container.decode(String.self, forKey: CodingKeys.images))
-    self.template = try container.decode(Template.self, forKey: CodingKeys.template)
+    self.template = try container.decode(TemplatePath.self, forKey: CodingKeys.template)
     self.relativeImagePath = try container.decode(String.self, forKey: CodingKeys.relativeImagePath)
   }
 

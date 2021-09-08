@@ -6,21 +6,23 @@
 //
 
 import Foundation
+import Stencil
+
 
 public class HTMLGenerator {
   
-  private let fileHandler: FileHandler
+  private let fileHandler: FileHandlerProtocol
   
-  public init(fileHandler: FileHandler) {
+  public init(fileHandler: FileHandlerProtocol) {
     self.fileHandler = fileHandler
   }
   
   public func generate(sections: [ShelfSection]) throws -> String {
     var sectionStrings = [String]()
-    
-    let pageTemplate = try self.fileHandler.getPageTemplate()
-    let sectionTemplate = try self.fileHandler.getSectionTemplate()
-    let bookTemplate = try self.fileHandler.getBookTemplate()
+        
+    let pageTemplate = Template(templateString: try self.fileHandler.getPageTemplate())
+    let sectionTemplate = Template(templateString: try self.fileHandler.getSectionTemplate())
+    let bookTemplate = Template(templateString: try self.fileHandler.getBookTemplate())
               
     for section in sections {
       var books = [String]()
@@ -36,24 +38,34 @@ public class HTMLGenerator {
         }
         
         let subtitle = bookInfo.dropFirst().joined()
-        
-        let bookString = bookTemplate
-          .replacingOccurrences(of: "{{cover}}", with: cover)
-          .replacingOccurrences(of: "{{goodreadsURL}}", with: book.goodreadsURL)
-          .replacingOccurrences(of: "{{title}}", with: title)
-          .replacingOccurrences(of: "{{subtitle}}", with: subtitle)
-          .replacingOccurrences(of: "{{authors}}", with: authors)
-        
-        books.append(bookString)          
+
+        do {
+          let bookString = try bookTemplate.render([
+            "cover": cover,
+            "goodreadsURL": book.goodreadsURL,
+            "title": title,
+            "subtitle": subtitle,
+            "authors": authors
+          ])
+          books.append(bookString)
+          
+        } catch {
+          print("\nTemplating failed for Book: \(title) \n", error)
+        }
       }
       
-      sectionStrings.append(
-        sectionTemplate
-          .replacingOccurrences(of: "{{header}}", with: section.header)
-          .replacingOccurrences(of: "{{books}}", with: books.joined(separator: "\n")))
+      do {
+        let sectionString = try sectionTemplate.render([
+          "header": section.header,
+          "books": books.joined(separator: "\n")
+        ])
+        sectionStrings.append(sectionString)
+        
+      } catch {
+        print("\nTemplating failed for Section: \(section.header) \n", error)
+      }
     }
-    
-    return pageTemplate.replacingOccurrences(of: "{{content}}", with: sectionStrings.joined(separator: "\n"))
+    return try pageTemplate.render(["content": sectionStrings.joined(separator: "\n")])
   }
   
 }
