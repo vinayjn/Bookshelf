@@ -19,6 +19,14 @@ public struct FileError: LocalizedError {
   }
 }
 
+public protocol FileHandlerProtocol {
+  func getPageTemplate() throws -> String
+    
+  func getSectionTemplate() throws -> String
+  
+  func getBookTemplate() throws -> String
+}
+
 public class FileHandler {
       
   private var pathConfig: PathConfig
@@ -73,17 +81,17 @@ public class FileHandler {
   
 }
 
-extension FileHandler {
+extension FileHandler: FileHandlerProtocol {
   
-  func getPageTemplate() throws -> String {
+  public func getPageTemplate() throws -> String {
     return try String(contentsOf: self.pathConfig.template.page, encoding: .utf8)
   }
   
-  func getSectionTemplate() throws -> String {
+  public func getSectionTemplate() throws -> String {
     return try String(contentsOf: self.pathConfig.template.section, encoding: .utf8)
   }
   
-  func getBookTemplate() throws -> String {
+  public func getBookTemplate() throws -> String {
     return try String(contentsOf: self.pathConfig.template.book, encoding: .utf8)
   }
   
