@@ -60,7 +60,14 @@ public enum BookState: Codable {
 }
 
 public struct ShelfSection: Codable {
+
   public let header: String
-  public var books: [BookState]
+  public let books: [BookState]
+  
+  public init(header: String, books: [BookState]) {
+    self.header = header
+    self.books = books
+  }
+  
 }
 

@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kylef/PathKit.git",
       "state" : {
-        "revision" : "73f8e9dca9b7a3078cb79128217dc8f2e585a511",
-        "version" : "1.0.0"
+        "revision" : "3bfd2737b700b9a36565a8c94f4ad2b050a5e574",
+        "version" : "1.0.1"
       }
     },
     {
@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kylef/Spectre.git",
       "state" : {
-        "revision" : "f79d4ecbf8bc4e1579fbd86c3e1d652fb6876c53",
-        "version" : "0.9.2"
+        "revision" : "26cc5e9ae0947092c7139ef7ba612e34646086c7",
+        "version" : "0.10.1"
       }
     },
     {
@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/stencilproject/Stencil.git",
       "state" : {
-        "revision" : "973e190edf5d09274e4a6bc2e636c86899ed84c3",
-        "version" : "0.14.1"
+        "revision" : "4f222ac85d673f35df29962fc4c36ccfdaf9da5b",
+        "version" : "0.15.1"
       }
     },
     {
