@@ -1,22 +1,23 @@
 import Foundation
 import SwiftSoup
 
-enum AmazonError: Error {
+public enum AmazonError: Error {
   case invalidURL
 }
 
-struct AmazonScrapper {
+public struct AmazonScrapper {
   
   private let productID: String
   private var document: Document?
   
-  init(pid: String) {
+  public init(pid: String) {
     self.productID = pid
   }
+  
 }
 
 extension AmazonScrapper: WebScrapper {
-  func getTitle() throws -> String {
+  public func getTitle() throws -> String {
     guard
       let productTitle = try document?.getElementById("productTitle")?.text(),
       productTitle.count > 0
@@ -27,7 +28,7 @@ extension AmazonScrapper: WebScrapper {
     return productTitle
   }
   
-  func getImageURL() throws -> URL {
+  public func getImageURL() throws -> URL {
     guard
       let imageSrc = try document?.getElementById("imgBlkFront")?.attr("src"),
       let url = URL(string: imageSrc)
@@ -37,7 +38,7 @@ extension AmazonScrapper: WebScrapper {
     return url
   }
   
-  func getAuthors() throws -> [String] {
+  public func getAuthors() throws -> [String] {
     guard
       let byLineInfo = try document?.getElementById("bylineInfo")
     else {
@@ -58,7 +59,7 @@ extension AmazonScrapper: WebScrapper {
     return authors
   }
   
-  mutating func scrap() async throws {
+  public mutating func scrap() async throws {
     let urlString = String(format: "https://www.amazon.in/gp/product/%@", productID)
     guard let url = URL(string: urlString) else {
       throw AmazonError.invalidURL

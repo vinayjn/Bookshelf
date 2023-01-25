@@ -1,19 +1,19 @@
 import Foundation
 
-enum BookAttribute {
+public enum BookAttribute {
   case title
   case imageURL
   case authors
   case affiliateURL
 }
 
-enum WebScrapperError: Error {
+public enum WebScrapperError: Error {
   case invalidHTTPResponse
   case parsingError(BookAttribute)
   case encodingError
 }
 
-protocol WebScrapper {
+public protocol WebScrapper {
   func buildBook() throws -> ScrappedBook
   func getTitle() throws -> String
   func getImageURL() throws -> URL
@@ -25,7 +25,7 @@ protocol WebScrapper {
 }
 
 extension WebScrapper {
-  func html(from url: URL) async throws -> String {
+  public func html(from url: URL) async throws -> String {
     let (data, response) = try await URLSession.shared.data(from: url)
     guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
       throw WebScrapperError.invalidHTTPResponse
@@ -37,7 +37,7 @@ extension WebScrapper {
     return htmlStr
   }
   
-  func buildBook() throws -> ScrappedBook {
+  public func buildBook() throws -> ScrappedBook {
     ScrappedBook(
       title: try getTitle(),
       imageURL: try getImageURL(),
