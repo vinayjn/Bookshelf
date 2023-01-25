@@ -1,60 +1,61 @@
 import Foundation
 import Stencil
 
+enum HTMLGeneratorError: Error {
+  case templateError(String)
+}
+
 public class HTMLGenerator {
-    private let fileHandler: FileHandlerProtocol
 
-    public init(fileHandler: FileHandlerProtocol) {
-        self.fileHandler = fileHandler
+  public static func generate(using sections: [NewShelfSection], templateConfiguration: TemplateConfiguration) throws -> String {
+    guard templateConfiguration.page.contains("{{content}}") else {
+      throw HTMLGeneratorError.templateError("Invalid page template")
     }
+    
+    guard
+      templateConfiguration.section.contains("{{header}}"),
+      templateConfiguration.section.contains("{{books}}")
+    else {
+      throw HTMLGeneratorError.templateError("Invalid section template")
+    }
+    
+    guard
+      templateConfiguration.book.contains("{{cover}}"),
+      templateConfiguration.book.contains("{{title}}"),
+      templateConfiguration.book.contains("{{authors}}"),
+      templateConfiguration.book.contains("{{affiliateURL}}")
+    else {
+      throw HTMLGeneratorError.templateError("Invalid book template")
+    }
+    
+    let pageTemplate = Template(templateString: templateConfiguration.page)
+    let sectionTemplate = Template(templateString: templateConfiguration.section)
+    let bookTemplate = Template(templateString: templateConfiguration.book)
 
-    public func generate(sections: [ShelfSection]) throws -> String {
-        var sectionStrings = [String]()
-
-        let pageTemplate = Template(templateString: try fileHandler.getPageTemplate())
-        let sectionTemplate = Template(templateString: try fileHandler.getSectionTemplate())
-        let bookTemplate = Template(templateString: try fileHandler.getBookTemplate())
-
-        for section in sections {
-            var books = [String]()
-
-            for book in section.books {
-                guard let bookInfo = book.title?.split(separator: ":").compactMap({ String($0) }),
-                      let cover = book.imageURL,
-                      let title = bookInfo.first,
-                      let authors = book.authors?.joined(separator: ", ")
-                else {
-                    continue
-                }
-
-                let subtitle = bookInfo.dropFirst().joined()
-
-                do {
-                    let bookString = try bookTemplate.render([
-                        "cover": cover,
-                        "goodreadsURL": book.goodreadsURL,
-                        "title": title,
-                        "subtitle": subtitle,
-                        "authors": authors,
-                    ])
-                    books.append(bookString)
-
-                } catch {
-                    print("\nTemplating failed for Book: \(title) \n", error)
-                }
-            }
-
-            do {
-                let sectionString = try sectionTemplate.render([
-                    "header": section.header,
-                    "books": books.joined(separator: "\n"),
-                ])
-                sectionStrings.append(sectionString)
-
-            } catch {
-                print("\nTemplating failed for Section: \(section.header) \n", error)
-            }
+    var sectionStrings = [String]()
+    
+    for section in sections {
+      var books = [String]()
+      
+      for bookState in section.books {
+        if case let .resolved(newBook) = bookState {
+          let bookString = try bookTemplate.render([
+            "cover": newBook.imageURL,
+            "affiliateURL": "",
+            "title": newBook.title,
+            "authors": newBook.authors,
+          ])
+          books.append(bookString)
         }
-        return try pageTemplate.render(["content": sectionStrings.joined(separator: "\n")])
+      }
+      
+      let sectionString = try sectionTemplate.render([
+        "header": section.header,
+        "books": books.joined(separator: "\n"),
+      ])
+      sectionStrings.append(sectionString)
     }
+    
+    return try pageTemplate.render(["content": sectionStrings.joined(separator: "\n")])
+  }
 }
