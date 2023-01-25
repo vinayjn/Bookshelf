@@ -14,7 +14,7 @@ enum WebScrapperError: Error {
 }
 
 protocol WebScrapper {
-  func buildBook() throws -> NewBook
+  func buildBook() throws -> ScrappedBook
   func getTitle() throws -> String
   func getImageURL() throws -> URL
   func getAuthors() throws -> [String]
@@ -37,11 +37,10 @@ extension WebScrapper {
     return htmlStr
   }
   
-  func buildBook() throws -> NewBook {
-    NewBook(
-      affiliateURL: "",
+  func buildBook() throws -> ScrappedBook {
+    ScrappedBook(
       title: try getTitle(),
-      imageURL: try getImageURL().absoluteString,
+      imageURL: try getImageURL(),
       authors: try getAuthors()
     )
   }

@@ -7,7 +7,7 @@ enum HTMLGeneratorError: Error {
 
 public class HTMLGenerator {
 
-  public static func generate(using sections: [NewShelfSection], templateConfiguration: TemplateConfiguration) throws -> String {
+  public static func generate(using sections: [ShelfSection], templateConfiguration: TemplateConfiguration) throws -> String {
     guard templateConfiguration.page.contains("{{content}}") else {
       throw HTMLGeneratorError.templateError("Invalid page template")
     }
