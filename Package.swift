@@ -13,15 +13,13 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/tid-kijyun/Kanna.git", from: "5.2.4"),
         .package(url: "https://github.com/scinfu/SwiftSoup.git", from: "2.5.3"),
         .package(url: "https://github.com/stencilproject/Stencil.git", from: "0.14.0"),
     ],
     targets: [
         .target(
             name: "Bookshelf",
-            dependencies: [
-                "Kanna",
+            dependencies: [                
                 "Stencil",
                 "SwiftSoup",
             ]
