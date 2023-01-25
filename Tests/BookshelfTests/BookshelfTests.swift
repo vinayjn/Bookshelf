@@ -6,11 +6,11 @@ final class BookshelfTests: XCTestCase {
   
   func testBooksJSONParsing() throws {
     let data = try XCTUnwrap(SampleJSON.books.data(using: .utf8))
-    let sections = try JSONDecoder().decode([NewShelfSection].self, from: data)
+    let sections = try JSONDecoder().decode([ShelfSection].self, from: data)
     XCTAssertNotNil(sections)
     
     XCTAssertEqual(sections.count, 2)
-    let currentlyReading = try XCTUnwrap(sections.first)    
+    let currentlyReading = try XCTUnwrap(sections.first)
     let currentlyPending = currentlyReading.books.filter { state in
       if case .pending = state {
         return true
@@ -23,23 +23,16 @@ final class BookshelfTests: XCTestCase {
     XCTAssertEqual(currentlyReading.header, "Currently Reading")
   }
   
-  func testHTMLGeneration() {
-    let generated = try? HTMLGenerator.generate(
-      sections: [
-        ShelfSection(
-          header: "Reading",
-          books: [
-            Book(
-              goodreadsURL: "www.goodreads.com",
-              title: "Steve Jobs",
-              imageURL: "",
-              authors: ["Walter Issacson"]
-            ),
-          ]
-        ),
-      ])
-
-    XCTAssertNotNil(generated)
+  func testHTMLGeneration() throws {
+    let fileHandler = MockFileHandler()
+    let sections = try fileHandler.getPersistedSections()
+    let templateConfiguration = TemplateConfiguration(
+      page: try fileHandler.getPageTemplate(),
+      section: try fileHandler.getSectionTemplate(),
+      book: try fileHandler.getBookTemplate())
+    
+    let html = try HTMLGenerator.generate(using: sections, templateConfiguration: templateConfiguration)
+    XCTAssertNotNil(html)
   }
   
   func testISBNScrapper() async throws {
@@ -68,7 +61,7 @@ private extension BookshelfTests {
     return try XCTUnwrap(string.data(using: .utf8))
   }
   
-  func scrapBook(with scrapper: inout WebScrapper) async throws -> NewBook {
+  func scrapBook(with scrapper: inout WebScrapper) async throws -> ScrappedBook {
     try await scrapper.scrap()
     return try scrapper.buildBook()
   }
