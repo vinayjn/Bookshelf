@@ -1,20 +1,12 @@
 import Foundation
 
-public struct Book: Codable {
-  public let goodreadsURL: String
-  public var title: String?
-  public var imageURL: String?
-  public var authors: [String]?
+public struct ScrappedBook {
+  public let title: String
+  public let imageURL: URL
+  public let authors: [String]
 }
 
-
-public struct ShelfSection: Codable {
-    public let header: String
-    public var books: [Book]
-}
-
-
-public struct NewBook: Codable {
+public struct ResolvedBook: Codable {
   public let affiliateURL: String
   public let title: String
   public let imageURL: String
@@ -28,7 +20,7 @@ public struct PendingBook: Codable {
 
 public enum BookState: Codable {
   case pending(PendingBook)
-  case resolved(NewBook)
+  case resolved(ResolvedBook)
   
   enum Keys: String, CodingKey {
     case pid
@@ -44,12 +36,12 @@ public enum BookState: Codable {
     if container.contains(Keys.isbn) && container.contains(Keys.pid) {
       self = .pending(try PendingBook(from: decoder))
     } else {
-      self = .resolved(try NewBook(from: decoder))
+      self = .resolved(try ResolvedBook(from: decoder))
     }
   }
 }
 
-public struct NewShelfSection: Codable {
+public struct ShelfSection: Codable {
   public let header: String
   public var books: [BookState]
 }
