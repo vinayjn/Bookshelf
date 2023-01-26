@@ -39,11 +39,15 @@ public class HTMLGenerator {
       
       for bookState in section.books {
         if case let .resolved(newBook) = bookState {
+          let title = newBook.title.components(separatedBy: ":")[0]
+          let authors = newBook.authors
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .joined(separator: ", ")
           let bookString = try bookTemplate.render([
             "cover": newBook.imageURL,
-            "affiliateURL": "",
-            "title": newBook.title,
-            "authors": newBook.authors,
+            "affiliateURL": newBook.affiliateURL,
+            "title": title,
+            "authors": authors,
           ])
           books.append(bookString)
         }
