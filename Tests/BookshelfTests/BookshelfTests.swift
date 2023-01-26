@@ -4,6 +4,15 @@ import XCTest
 
 final class BookshelfTests: XCTestCase {
   
+  func testSaveSections() throws {
+    let data = try XCTUnwrap(SampleJSON.books.data(using: .utf8))
+    let sections = try JSONDecoder().decode([ShelfSection].self, from: data)
+    
+    let fileHandler = MockFileHandler()
+    
+    try fileHandler.save(sections: sections)
+  }
+  
   func testBooksJSONParsing() throws {
     let data = try XCTUnwrap(SampleJSON.books.data(using: .utf8))
     let sections = try JSONDecoder().decode([ShelfSection].self, from: data)
