@@ -49,6 +49,20 @@ public enum BookState: Codable {
     case affliateURL
   }
   
+  enum CodingKeys: CodingKey {
+    case pending
+    case resolved
+  }
+  
+  public func encode(to encoder: Encoder) throws {
+    switch self {
+    case let .pending(pendingBook):
+      try pendingBook.encode(to: encoder)
+    case let .resolved(resolvedBook):
+      try resolvedBook.encode(to: encoder)
+    }
+  }
+  
   public init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: Keys.self)
     if container.contains(Keys.isbn) && container.contains(Keys.pid) {
