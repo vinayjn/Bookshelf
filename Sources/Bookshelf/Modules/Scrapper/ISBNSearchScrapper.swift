@@ -7,12 +7,11 @@ enum ISBNSearchError: Error {
 }
 
 public struct ISBNSearchScrapper: WebScrapper {
-  
   private var book: Element?
   private var bookInfo: Element?
-  
+
   private let isbn: String
-  
+
   public init(isbn: String) {
     self.isbn = isbn
   }
@@ -23,7 +22,7 @@ public struct ISBNSearchScrapper: WebScrapper {
     }
     return title
   }
-  
+
   public func getImageURL() throws -> URL {
     guard
       let imageSrc = try book?.getElementsByClass("image").first()?.children().first()?.attr("src"),
@@ -33,7 +32,7 @@ public struct ISBNSearchScrapper: WebScrapper {
     }
     return url
   }
-  
+
   public func getAuthors() throws -> [String] {
     let allPs = bookInfo?.children().filter { $0.tagName() == "p" } ?? []
     var authors = [String]()
@@ -46,7 +45,7 @@ public struct ISBNSearchScrapper: WebScrapper {
         break
       }
     }
-    
+
     guard authors.count > 0 else {
       throw WebScrapperError.parsingError(.authors)
     }
@@ -54,7 +53,7 @@ public struct ISBNSearchScrapper: WebScrapper {
   }
 
   public mutating func scrap() async throws {
-    let urlString = String(format: "https://isbnsearch.org/isbn/%@", self.isbn)
+    let urlString = String(format: "https://isbnsearch.org/isbn/%@", isbn)
     guard let url = URL(string: urlString) else {
       throw ISBNSearchError.invalidURL
     }
@@ -63,5 +62,4 @@ public struct ISBNSearchScrapper: WebScrapper {
     book = try doc.getElementById("book")
     bookInfo = try book?.getElementsByClass("bookInfo").first()
   }
-
 }

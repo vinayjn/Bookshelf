@@ -6,14 +6,12 @@ public enum AmazonError: Error {
 }
 
 public struct AmazonScrapper {
-  
   private let productID: String
   private var document: Document?
-  
+
   public init(pid: String) {
-    self.productID = pid
+    productID = pid
   }
-  
 }
 
 extension AmazonScrapper: WebScrapper {
@@ -24,10 +22,10 @@ extension AmazonScrapper: WebScrapper {
     else {
       throw WebScrapperError.parsingError(.title)
     }
-    
+
     return productTitle
   }
-  
+
   public func getImageURL() throws -> URL {
     guard
       let imageSrc = try document?.getElementById("imgBlkFront")?.attr("src"),
@@ -37,14 +35,14 @@ extension AmazonScrapper: WebScrapper {
     }
     return url
   }
-  
+
   public func getAuthors() throws -> [String] {
     guard
       let byLineInfo = try document?.getElementById("bylineInfo")
     else {
       throw WebScrapperError.parsingError(.authors)
     }
-    
+
     let authorSpans = byLineInfo.children().filter { $0.tagName() == "span" }
     var authors = [String]()
     for authorSpan in authorSpans {
@@ -55,10 +53,10 @@ extension AmazonScrapper: WebScrapper {
     guard !authors.isEmpty else {
       throw WebScrapperError.parsingError(.authors)
     }
-    
+
     return authors
   }
-  
+
   public mutating func scrap() async throws {
     let urlString = String(format: "https://www.amazon.in/gp/product/%@", productID)
     guard let url = URL(string: urlString) else {

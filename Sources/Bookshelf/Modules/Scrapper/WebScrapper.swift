@@ -20,28 +20,28 @@ public protocol WebScrapper {
   func getAuthors() throws -> [String]
   func html(from url: URL) async throws -> String
   //  func getAffiliateURL() throws -> URL
-  
+
   mutating func scrap() async throws
 }
 
-extension WebScrapper {
-  public func html(from url: URL) async throws -> String {
+public extension WebScrapper {
+  func html(from url: URL) async throws -> String {
     let (data, response) = try await URLSession.shared.data(from: url)
     guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
       throw WebScrapperError.invalidHTTPResponse
     }
-    
+
     guard let htmlStr = String(data: data, encoding: .utf8) else {
       throw WebScrapperError.encodingError
     }
     return htmlStr
   }
-  
-  public func buildBook() throws -> ScrappedBook {
-    ScrappedBook(
-      title: try getTitle(),
-      imageURL: try getImageURL(),
-      authors: try getAuthors()
+
+  func buildBook() throws -> ScrappedBook {
+    try ScrappedBook(
+      title: getTitle(),
+      imageURL: getImageURL(),
+      authors: getAuthors()
     )
   }
 }

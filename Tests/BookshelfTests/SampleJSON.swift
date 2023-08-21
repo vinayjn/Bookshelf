@@ -1,7 +1,6 @@
 import Foundation
 
 enum SampleJSON {
-  
   static let books = """
   [
   {
@@ -49,5 +48,4 @@ enum SampleJSON {
   }
   ]
   """
-  
 }
