@@ -28,7 +28,7 @@ extension AmazonScrapper: WebScrapper {
 
   public func getImageURL() throws -> URL {
     guard
-      let imageSrc = try document?.getElementById("imgBlkFront")?.attr("src"),
+      let imageSrc = try document?.getElementById("imgTagWrapperId")?.children().first()?.attr("src"),
       let url = URL(string: imageSrc)
     else {
       throw WebScrapperError.parsingError(.imageURL)
